@@ -7,17 +7,20 @@
 
   <ItemGroup>
     <ProjectReference Include="../Native/rust-ffi.rsproj" />
+
     <!-- TODO: Add profiles for different cpus and targets -->
     <None Condition="$([MSBuild]::IsOsPlatform('MacOS'))"
       Include="$(NativeOutputPath)librust_ffi.dylib"
       Pack="true"
-      PackagePath="runtimes/macos_aarch64/native"
+      PackagePath="runtimes/macos-aarch64/native"
       CopyToOutputDirectory="PreserveNewest" />
+
     <None Condition="$([MSBuild]::IsOsPlatform('Linux'))"
       Include="$(NativeOutputPath)librust_ffi.so"
       Pack="true"
       PackagePath="runtimes/linux-x86_64/native"
       CopyToOutputDirectory="PreserveNewest" />
+
     <None Condition="$([MSBuild]::IsOsPlatform('Windows'))"
       Include="$(NativeOutputPath)rust_ffi.dll"
       Pack="true"

@@ -75,6 +75,7 @@ public record RangeProof
         return (new RangeProof(tuple.Proof), new CompressedPoint(bytes));
     }
 
+
     /// <summary>
     /// Verify the proof
     /// </summary>
@@ -88,7 +89,7 @@ public record RangeProof
         (
             BulletProofGen bp_gen,
             Generator pc_gen,
-            CompressedPoint commitment, // Should be a CompressedPoint
+            CompressedPoint commitment,
             uint n,
             byte[] label
         )
@@ -104,6 +105,23 @@ public record RangeProof
                 label.Length
                 );
         return res;
+    }
+
+    /// <summary>
+    /// Verify the proof using the default generators
+    /// </summary>
+    /// <param name="commitment">Commitment from the proving step</param>
+    /// <param name="n">bitsize for the proof, n = 8, 16, 32, 64</param>
+    /// <param name="label">label for seperating the domain</param>
+    /// <returns>true if the proof is valid</returns>
+    public bool VerifySingle
+        (
+            CompressedPoint commitment,
+            uint n,
+            byte[] label
+        )
+    {
+        return VerifySingle(BulletProofGen.Default, Generator.Default, commitment, n, label);
     }
 
     /// <summary>

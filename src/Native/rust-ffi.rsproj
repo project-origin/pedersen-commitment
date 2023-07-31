@@ -11,8 +11,9 @@
         <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release" />
 
         <!-- For packaging we need to provide the relevant profiles -->
-        <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release --target aarch64-unknown-linux-gnu"  />
-        <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release --target x86_64-unknown-linux-gnu"  />
+        <!-- TODO: Make this a flag to pass to the build system when packageing -->
+        <!-- <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build -\-release -\-target aarch64-unknown-linux-gnu"  /> -->
+        <!-- <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build -\-release -\-target x86_64-unknown-linux-gnu"  /> -->
     </Target>
 
     <Target Name="Clean">
