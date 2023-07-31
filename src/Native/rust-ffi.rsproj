@@ -1,0 +1,22 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <IsPublishable>false</IsPublishable>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="src/**/*.rs" />
+    </ItemGroup>
+    <Target Name="Build" Inputs="@(Compile);cargo.toml;cargo.lock" Outputs="target/$(Configuration)/*rust-ffi.*">
+        <Exec Condition="'$(Configuration)' != 'Release' " Command="cargo build" />
+        <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release" />
+
+        <!-- For packaging we need to provide the relevant profiles -->
+        <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release --target aarch64-unknown-linux-gnu"  />
+        <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release --target x86_64-unknown-linux-gnu"  />
+    </Target>
+
+    <Target Name="Clean">
+        <Exec Command="cargo clean" />
+    </Target>
+</Project>
+<!-- vim: ft=xml -->
