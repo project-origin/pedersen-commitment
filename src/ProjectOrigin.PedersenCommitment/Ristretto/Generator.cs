@@ -6,30 +6,30 @@ using ProjectOrigin.PedersenCommitment.Ristretto;
 
 namespace ProjectOrigin.PedersenCommitment;
 
-public sealed record Generator
+public sealed partial record Generator
 {
-    private class Native
+    private partial class Native
     {
-        [DllImport("rust_ffi", EntryPoint = "pedersen_gens_default")]
-        internal static extern IntPtr Default();
+        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_default")]
+        internal static partial IntPtr Default();
 
-        [DllImport("rust_ffi", EntryPoint = "pedersen_gens_new")]
-        internal static extern IntPtr New(IntPtr g, IntPtr h);
+        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_new")]
+        internal static partial IntPtr New(IntPtr g, IntPtr h);
 
-        [DllImport("rust_ffi", EntryPoint = "pedersen_gens_commit")]
-        internal static extern IntPtr Commit(IntPtr self, IntPtr m, IntPtr r);
+        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_commit")]
+        internal static partial IntPtr Commit(IntPtr self, IntPtr m, IntPtr r);
 
-        [DllImport("rust_ffi", EntryPoint = "pedersen_gens_commit_bytes")]
-        internal static extern IntPtr Commit(IntPtr self, byte[] m, byte[] r);
+        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_commit_bytes")]
+        internal static partial IntPtr Commit(IntPtr self, byte[] m, byte[] r);
 
-        [DllImport("rust_ffi", EntryPoint = "pedersen_gens_free")]
-        internal static extern void Free(IntPtr self);
+        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_free")]
+        internal static partial void Free(IntPtr self);
 
-        [DllImport("rust_ffi", EntryPoint = "pedersen_gens_B")]
-        internal static extern IntPtr G(IntPtr self);
+        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_B")]
+        internal static partial IntPtr G(IntPtr self);
 
-        [DllImport("rust_ffi", EntryPoint = "pedersen_gens_B_blinding")]
-        internal static extern IntPtr H(IntPtr self);
+        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_B_blinding")]
+        internal static partial IntPtr H(IntPtr self);
     }
 
     public static Lazy<Generator> LazyGenerator = new Lazy<Generator>(() =>

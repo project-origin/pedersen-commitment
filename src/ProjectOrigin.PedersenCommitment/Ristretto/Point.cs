@@ -5,47 +5,48 @@ using System.Runtime.InteropServices;
 
 namespace ProjectOrigin.PedersenCommitment.Ristretto;
 
-public sealed class Point
+public sealed partial class Point
 {
-    private class Native
+    private partial class Native
     {
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_from_uniform_bytes")]
-        internal static extern IntPtr FromUniformBytes(byte[] bytes);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_from_uniform_bytes")]
+        internal static partial IntPtr FromUniformBytes(byte[] bytes);
 
         // TODO: check if byte[] is a sane argument
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_compress")]
-        internal static extern void Compress(IntPtr self, byte[] bytes_ptr);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_compress")]
+        internal static partial void Compress(IntPtr self, byte[] bytes_ptr);
 
         // TODO: check if byte[] is a sane argument
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_decompress")]
-        internal static extern IntPtr Decompress(byte[] bytes);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_decompress")]
+        internal static partial IntPtr Decompress(byte[] bytes);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_free")]
-        internal static extern void Free(IntPtr self);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_free")]
+        internal static partial void Free(IntPtr self);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_add")]
-        internal static extern IntPtr Add(IntPtr lhs, IntPtr rhs);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_add")]
+        internal static partial IntPtr Add(IntPtr lhs, IntPtr rhs);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_sub")]
-        internal static extern IntPtr Sub(IntPtr lhs, IntPtr rhs);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_sub")]
+        internal static partial IntPtr Sub(IntPtr lhs, IntPtr rhs);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_negate")]
-        internal static extern IntPtr Negate(IntPtr self);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_negate")]
+        internal static partial IntPtr Negate(IntPtr self);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_mul_bytes")]
-        internal static extern IntPtr Mul(IntPtr lhs, byte[] rhs);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_mul_bytes")]
+        internal static partial IntPtr Mul(IntPtr lhs, byte[] rhs);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_mul_scalar")]
-        internal static extern IntPtr Mul(IntPtr point, IntPtr scalar);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_mul_scalar")]
+        internal static partial IntPtr Mul(IntPtr point, IntPtr scalar);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_sum")]
-        internal static extern IntPtr Sum(IntPtr[] args, int len);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_sum")]
+        internal static partial IntPtr Sum(IntPtr[] args, int len);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_equals")]
-        internal static extern bool Equals(IntPtr lhs, IntPtr rhs);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_equals")]
+        [return: MarshalAs(UnmanagedType.U1)]
+        internal static partial bool Equals(IntPtr lhs, IntPtr rhs);
 
-        [DllImport("rust_ffi", EntryPoint = "ristretto_point_gut_spill")]
-        internal static extern void GutSpill(IntPtr self);
+        [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_gut_spill")]
+        internal static partial void GutSpill(IntPtr self);
     }
 
     internal readonly IntPtr _ptr;
@@ -169,7 +170,7 @@ public sealed class Point
     }
 }
 
-public readonly struct CompressedPoint
+public readonly partial struct CompressedPoint
 {
 
     public const int ByteSize = 32;
@@ -185,11 +186,11 @@ public readonly struct CompressedPoint
         _bytes = bytes;
     }
 
-    [DllImport("rust_ffi", EntryPoint = "compressed_ristretto_from_bytes")]
-    internal static extern IntPtr FromBytes(byte[] bytes);
+    [LibraryImport("rust_ffi", EntryPoint = "compressed_ristretto_from_bytes")]
+    internal static partial IntPtr FromBytes(byte[] bytes);
 
-    [DllImport("rust_ffi", EntryPoint = "compressed_ristretto_to_bytes")]
-    internal static extern void ToBytes(IntPtr self, byte[] bytes);
+    [LibraryImport("rust_ffi", EntryPoint = "compressed_ristretto_to_bytes")]
+    internal static partial void ToBytes(IntPtr self, byte[] bytes);
 
     /// <summary>
     /// Decompress a point enabling arithmetic
