@@ -1,33 +1,76 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NativeOutputPath>../Native/target/$(Configuration.ToLowerInvariant())/</NativeOutputPath>
+
+    <!-- TODO: Use these somehow-->
+    <MacOSOutputPath>../Native/target/x86_64-apple-darwin/$(Configuration.ToLowerInvariant())/</MacOSOutputPath>
+    <LinuxOutputPath>../Native/target/x86_64-unknown-linux-gnu/$(Configuration.ToLowerInvariant())/</LinuxOutputPath>
+    <WindowsOutputPath>../Native/target/x86_64-pc-windows-gnu/$(Configuration.ToLowerInvariant())/</WindowsOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="../Native/rust-ffi.rsproj"
-       ReferenceOutputAssembly="false"
+      ReferenceOutputAssembly="false"
       />
 
-    <!-- TODO: Add profiles for different cpus and targets -->
+    <!-- TODO: Delete these? -->
     <None Condition="$([MSBuild]::IsOsPlatform('MacOS'))"
       Include="$(NativeOutputPath)librust_ffi.dylib"
       Pack="true"
-      PackagePath="runtimes/macos-aarch64/native"
+      PackagePath="runtimes/$(RuntimeIdentifier)/native"
       CopyToOutputDirectory="PreserveNewest" />
 
     <None Condition="$([MSBuild]::IsOsPlatform('Linux'))"
       Include="$(NativeOutputPath)librust_ffi.so"
       Pack="true"
-      PackagePath="runtimes/linux-x86_64/native"
+      PackagePath="runtimes/$(RuntimeIdentifier)/native"
       CopyToOutputDirectory="PreserveNewest" />
 
     <None Condition="$([MSBuild]::IsOsPlatform('Windows'))"
       Include="$(NativeOutputPath)rust_ffi.dll"
       Pack="true"
-      PackagePath="runtimes/win-x86_64/native"
+      PackagePath="runtimes/$(RuntimeIdentifier)/native"
       CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
 
+
+    <!-- Dependent on the output folder -->
+    <!-- TODO: Simplify this down -->
+    <None Condition="'$(RuntimeIdentifier)' == 'osx-x64'"
+      Include="../Native/target/x86_64-apple-darwin/$(Configuration.ToLowerInvariant())/librust_ffi.dylib"
+      Pack="true"
+      PackagePath="runtimes/osx-x64/native"
+      CopyToOutputDirectory="PreserveNewest" />
+
+    <None Condition="'$(RuntimeIdentifier)' == 'osx-arm64'"
+      Include="../Native/target/aarch64-apple-darwin/$(Configuration.ToLowerInvariant())/librust_ffi.dylib"
+      Pack="true"
+      PackagePath="runtimes/osx-arm64/native"
+      CopyToOutputDirectory="PreserveNewest" />
+
+    <None Condition="'$(RuntimeIdentifier)' == 'linux-x64'"
+      Include="../Native/target/x86_64-unknown-linux-gnu/$(Configuration.ToLowerInvariant())/librust_ffi.so"
+      Pack="true"
+      PackagePath="runtimes/linux-x64/native"
+      CopyToOutputDirectory="PreserveNewest" />
+
+    <None Condition="'$(RuntimeIdentifier)' == 'linux-arm64'"
+      Include="../Native/target/aarch64-unknown-linux-gnu/$(Configuration.ToLowerInvariant())/librust_ffi.so"
+      Pack="true"
+      PackagePath="runtimes/linux-arm64/native"
+      CopyToOutputDirectory="PreserveNewest" />
+
+    <None Condition="'$(RuntimeIdentifier)' == 'win-x86'"
+      Include="../Native/target/x86_64-pc-windows-gnu/$(Configuration.ToLowerInvariant())/rust_ffi.dll"
+      Pack="true"
+      PackagePath="runtimes/win-x86/native"
+      CopyToOutputDirectory="PreserveNewest" />
+
+    <None Condition="'$(RuntimeIdentifier)' == 'win-arm64'"
+      Include="../Native/target/aarch64-pc-windows-gnu/$(Configuration.ToLowerInvariant())/rust_ffi.dll"
+      Pack="true"
+      PackagePath="runtimes/win-arm64/native"
+      CopyToOutputDirectory="PreserveNewest" />
+
+  </ItemGroup>
 </Project>

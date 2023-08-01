@@ -1,4 +1,4 @@
-<Project InitialTargets="Build">
+<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
     <PropertyGroup>
         <ProjectTypeGuids>{2F08BC15-189B-4804-B644-653F34C968A8}</ProjectTypeGuids>
         <AssemblyName>RustFFI</AssemblyName>
@@ -12,20 +12,38 @@
         <Compile Include="src/**/*.rs" />
     </ItemGroup>
 
-    <Target Name="Build" Inputs="@(Compile);cargo.toml;cargo.lock" Outputs="target/$(Configuration)/*rust-ffi.*">
-        <Exec Condition="'$(Configuration)' != 'Release' " Command="cargo build" />
-        <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release" />
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Build.NoTargets" Version="3.7.0" />
+  </ItemGroup>
 
-        <!-- For packaging we need to provide the relevant profiles -->
-        <!-- TODO: Make this a flag to pass to the build system when packageing -->
-        <!-- <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build -\-release -\-target aarch64-unknown-linux-gnu"  /> -->
-        <!-- <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build -\-release -\-target x86_64-unknown-linux-gnu"  /> -->
+    <Choose>
+        <When Condition=" '$(Configuration)'=='Debug' ">
+            <PropertyGroup>
+                <Cargo>cargo build</Cargo>
+            </PropertyGroup>
+        </When>
+        <When Condition=" '$(Configuration)'=='Release' ">
+            <PropertyGroup>
+                <Cargo>cargo build --release</Cargo>
+            </PropertyGroup>
+        </When>
+    </Choose>
+
+    <Target Name="BuildRust" Inputs="@(Compile);cargo.toml;cargo.lock" Outputs="target/$(Configuration)/*rust-ffi.*" BeforeTargets="BeforeBuild">
+        <Exec Condition="'$(RuntimeIdentifier)' == 'osx-x64'" Command="$(Cargo) --target=x86_64-apple-darwin" />
+        <Exec Condition="'$(RuntimeIdentifier)' == 'osx-arm64'" Command="$(Cargo) --target=aarch64-apple-darwin" />
+        <Exec Condition="'$(RuntimeIdentifier)' == 'linux-x64'" Command="$(Cargo) --target=x86_64-unknown-linux-gnu" />
+        <Exec Condition="'$(RuntimeIdentifier)' == 'linux-arm64'" Command="$(Cargo) --target=aarch64-unknown-linux-gnu" />
+        <Exec Condition="'$(RuntimeIdentifier)' == 'win-x64'" Command="$(Cargo) --target=x86_64-pc-windows-gnu" />
+        <Exec Condition="'$(RuntimeIdentifier)' == 'win-arm64'" Command="$(Cargo) --target=aarch64-pc-windows-gnu" />
+
+        <!-- Handle the native case (just in case) -->
+        <Exec Command="$(Cargo)" />
     </Target>
 
-    <Target Name="Clean">
+
+    <Target Name="CleanRust" BeforeTargets="Clean">
         <Exec Command="cargo clean" />
     </Target>
-
-    <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 </Project>
 <!-- vim: ft=xml -->
