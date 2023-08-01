@@ -1,11 +1,17 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project InitialTargets="Build">
     <PropertyGroup>
-        <IsPackable>false</IsPackable>
+        <ProjectTypeGuids>{2F08BC15-189B-4804-B644-653F34C968A8}</ProjectTypeGuids>
+        <AssemblyName>RustFFI</AssemblyName>
         <IsPublishable>false</IsPublishable>
+        <EnableDefaultItems>false</EnableDefaultItems>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <DebugType>None</DebugType>
     </PropertyGroup>
+
     <ItemGroup>
         <Compile Include="src/**/*.rs" />
     </ItemGroup>
+
     <Target Name="Build" Inputs="@(Compile);cargo.toml;cargo.lock" Outputs="target/$(Configuration)/*rust-ffi.*">
         <Exec Condition="'$(Configuration)' != 'Release' " Command="cargo build" />
         <Exec Condition="'$(Configuration)' == 'Release' " Command="cargo build --release" />
@@ -19,5 +25,7 @@
     <Target Name="Clean">
         <Exec Command="cargo clean" />
     </Target>
+
+    <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 </Project>
 <!-- vim: ft=xml -->

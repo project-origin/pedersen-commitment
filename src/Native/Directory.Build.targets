@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
     <PackageId>Native</PackageId>
     <Company>Project-Origin</Company>
     <PackageTags>Project Origin;ProjectOrigin;Pedersen Commitments</PackageTags>

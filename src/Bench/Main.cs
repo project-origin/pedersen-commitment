@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using System.Text;
 using System;
 
-class ProgramEntry {
+class ProgramEntry
+{
 
-    static int Main(string[] args) {
+    static int Main(string[] args)
+    {
         uint iters = 100;
         System.Console.WriteLine($"Running {iters} iterations sequentially");
         var rangeproofs = new RangeProof[iters];

@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Native/rust-ffi.rsproj" />
+    <ProjectReference Include="../Native/rust-ffi.rsproj"
+       ReferenceOutputAssembly="false"
+      />
 
     <!-- TODO: Add profiles for different cpus and targets -->
     <None Condition="$([MSBuild]::IsOsPlatform('MacOS'))"
