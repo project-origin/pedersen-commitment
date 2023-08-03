@@ -15,8 +15,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="../Native/rust-ffi.rsproj" />
-
     <!-- These libraries are only included if found, so it is required to compile them first-->
 
     <Content Condition="Exists($(MacOSIntelOutput))"

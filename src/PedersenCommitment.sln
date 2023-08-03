@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2F08BC15-189B-4804-B644-653F34C968A8}") = "rust-ffi", "Native\rust-ffi.rsproj", "{9DDB2631-6AD7-44B7-952F-E101D2CE4EFC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOrigin.PedersenCommitment", "ProjectOrigin.PedersenCommitment\ProjectOrigin.PedersenCommitment.csproj", "{1899F188-573D-42D3-9777-F4C5C2489378}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOrigin.PedersenCommitment.Tests", "ProjectOrigin.PedersenCommitment.Tests\ProjectOrigin.PedersenCommitment.Tests.csproj", "{0A2E0271-8C15-4987-BD4B-C8287F2BEB3B}"
