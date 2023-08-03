@@ -43,6 +43,7 @@ restore:
 
 ## Builds all the code
 build:
+	(cd src/Native; cargo build)
 	dotnet build $(src_path)
 
 ## Formats files using dotnet format

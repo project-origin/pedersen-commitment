@@ -56,7 +56,7 @@
       CopyToOutputDirectory="PreserveNewest" />
 
     <!-- Native for this machine -->
-    <Content Condition="Exists('../Native/target/$(Configuration.ToLowerInvariant())/*rust_ffi.*')"
+    <Content Condition="Exists('../Native/target/$(Configuration.ToLowerInvariant())')"
       Include="../Native/target/$(Configuration.ToLowerInvariant())/*rust_ffi.*"
       Pack="true"
       PackagePath="runtimes/any/native/"
