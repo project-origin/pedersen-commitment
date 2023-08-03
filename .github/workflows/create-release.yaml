@@ -55,6 +55,14 @@ jobs:
           linker = "aarch64-linux-gnu-gcc"
           EOF
 
+      - name: BuildNativeDeps
+        shell: bash
+        working-directory: 'src/Native'
+        run: |
+          cargo build --release --target=x86_64-unknown-linux-gnu
+          cargo build --release --target=aarch64-unknown-linux-gnu
+          cargo build --release --target=x86_64-pc-windows-gnu
+
       - name: Build
         shell: bash
         run: dotnet build --configuration Release ${{ env.project }}

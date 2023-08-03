@@ -6,6 +6,7 @@
         <EnableDefaultItems>false</EnableDefaultItems>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <DebugType>None</DebugType>
+        <BuildAllTargets>true</BuildAllTargets>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,8 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Build.NoTargets" Version="3.7.0" />
-  </ItemGroup>
+        <PackageReference Include="Microsoft.Build.NoTargets" Version="3.7.0" />
+    </ItemGroup>
 
     <Choose>
         <When Condition=" '$(Configuration)'=='Debug' ">
@@ -29,18 +30,20 @@
         </When>
     </Choose>
 
-    <Target Name="BuildRust" Inputs="@(Compile);cargo.toml;cargo.lock" Outputs="target/$(Configuration)/*rust-ffi.*" BeforeTargets="BeforeBuild">
-        <Exec Condition="'$(RuntimeIdentifier)' == 'osx-x64'" Command="$(Cargo) --target=x86_64-apple-darwin" />
-        <Exec Condition="'$(RuntimeIdentifier)' == 'osx-arm64'" Command="$(Cargo) --target=aarch64-apple-darwin" />
-        <Exec Condition="'$(RuntimeIdentifier)' == 'linux-x64'" Command="$(Cargo) --target=x86_64-unknown-linux-gnu" />
-        <Exec Condition="'$(RuntimeIdentifier)' == 'linux-arm64'" Command="$(Cargo) --target=aarch64-unknown-linux-gnu" />
-        <Exec Condition="'$(RuntimeIdentifier)' == 'win-x64'" Command="$(Cargo) --target=x86_64-pc-windows-gnu" />
-        <Exec Condition="'$(RuntimeIdentifier)' == 'win-arm64'" Command="$(Cargo) --target=aarch64-pc-windows-gnu" />
-
-        <!-- Handle the native case (just in case) -->
-        <Exec Command="$(Cargo)" />
+    <Target Name="BuildRust" Inputs="@(Compile);cargo.toml;cargo.lock" Outputs="target/**/$(Configuration)/*rust-ffi.*" BeforeTargets="BeforeBuild">
+        <ItemGroup Condition="'$(BuildAllTargets)'=='true'">
+            <Exec Command="$(Cargo) --target=x86_64-apple-darwin" />
+            <Exec Command="$(Cargo) --target=aarch64-apple-darwin" />
+            <Exec Command="$(Cargo) --target=x86_64-unknown-linux-gnu" />
+            <Exec Command="$(Cargo) --target=aarch64-unknown-linux-gnu" />
+            <Exec Command="$(Cargo) --target=x86_64-pc-windows-gnu" />
+            <Exec Command="$(Cargo) --target=aarch64-pc-windows-gnu" />
+        </ItemGroup>
+        <ItemGroup Condition="'$(BuildAllTargets)'=='false'">
+            <!-- Machine native version -->
+            <Exec Command="$(Cargo)" />
+        </ItemGroup>
     </Target>
-
 
     <Target Name="CleanRust" BeforeTargets="Clean">
         <Exec Command="cargo clean" />
