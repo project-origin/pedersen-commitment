@@ -8,6 +8,8 @@ formatting_command := \033[1;34m
 formatting_desc := \033[0;32m
 formatting_none := \033[0m
 
+target_triple := $(shell rustc -vV | sed -n 's|host: ||p')
+
 .PHONY: help verify info lint clean restore build format test unit-test verify-chart doc-serve concordium-tests
 
 .DEFAULT_GOAL := help
@@ -35,6 +37,7 @@ lint:
 
 ## Does a dotnet clean
 clean:
+	(cd src/Native; cargo clean)
 	dotnet clean $(src_path)
 
 ## Restores all dotnet projects
@@ -43,8 +46,12 @@ restore:
 
 ## Builds all the code
 build:
-	(cd src/Native; cargo build)
+	(cd src/Native; cargo build --target=$(target_triple))
 	dotnet build $(src_path)
+
+build-release:
+	(cd src/Native; cargo build --target=$(target_triple) --release)
+	dotnet build -c Release $(src_path)
 
 ## Formats files using dotnet format
 format:

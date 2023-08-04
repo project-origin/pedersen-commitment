@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RuntimeIdentifiers>linux-x64;linux-arm64;win-x64;win-aarch64;osx-x64;osx-aarch64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>linux-x64;linux-arm64;win-x64</RuntimeIdentifiers>
     <TargetFramework>net7.0</TargetFramework>
 
     <NativeOutputPath>../Native/target/$(Configuration.ToLowerInvariant())/</NativeOutputPath>
@@ -15,7 +15,7 @@
 
 
   <ItemGroup>
-    <!-- These libraries are only included if found, so it is required to compile them first-->
+    <!-- These libraries are only included if found, so it is required to compile them first -->
 
     <Content Condition="Exists($(MacOSIntelOutput))"
       Include="$(MacOSIntelOutput)"
@@ -51,13 +51,6 @@
       Include="$(WindowsARMOutput)"
       Pack="true"
       PackagePath="runtimes/win-arm64/native/"
-      CopyToOutputDirectory="PreserveNewest" />
-
-    <!-- Native for this machine -->
-    <Content Condition="Exists('../Native/target/$(Configuration.ToLowerInvariant())')"
-      Include="../Native/target/$(Configuration.ToLowerInvariant())/*rust_ffi.*"
-      Pack="true"
-      PackagePath="runtimes/any/native/"
       CopyToOutputDirectory="PreserveNewest" />
 
   </ItemGroup>
