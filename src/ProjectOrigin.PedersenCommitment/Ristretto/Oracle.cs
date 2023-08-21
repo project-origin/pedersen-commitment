@@ -3,20 +3,21 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System;
 
-public class Oracle
+using static Extensions;
+public partial class Oracle
 {
 
-    private class NativeTranscript
+    private partial class NativeTranscript
     {
 
-        [DllImport("rust_ffi", EntryPoint = "transcript_new")]
-        internal static extern IntPtr New(byte[] label, int len);
+        [LibraryImport(LIBRARY, EntryPoint = "transcript_new")]
+        internal static partial IntPtr New(byte[] label, int len);
 
-        [DllImport("rust_ffi", EntryPoint = "transcript_append_point")]
-        internal static extern void AppendPoint(IntPtr self, byte[] label, int len, IntPtr point);
+        [LibraryImport(LIBRARY, EntryPoint = "transcript_append_point")]
+        internal static partial void AppendPoint(IntPtr self, byte[] label, int len, IntPtr point);
 
-        [DllImport("rust_ffi", EntryPoint = "transcript_challenge_scalar")]
-        internal static extern IntPtr ChallengeScalar(IntPtr self, byte[] label, int len);
+        [LibraryImport(LIBRARY, EntryPoint = "transcript_challenge_scalar")]
+        internal static partial IntPtr ChallengeScalar(IntPtr self, byte[] label, int len);
     }
 
     private readonly IntPtr _ptr;

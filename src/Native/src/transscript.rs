@@ -3,7 +3,7 @@ use core::slice;
 use curve25519_dalek_ng::{ristretto::RistrettoPoint, scalar::Scalar};
 use merlin::Transcript;
 
-use crate::deref;
+use crate::reref;
 
 
 #[no_mangle]
@@ -21,7 +21,7 @@ pub unsafe extern "C" fn transcript_append_point(
     point: *const RistrettoPoint
 ) {
     let label = slice::from_raw_parts(label, len);
-    let point = deref!(point);
+    let point = reref(point);
     (*this).append_message(label, point.compress().as_bytes());
 }
 

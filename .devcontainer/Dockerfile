@@ -1,1 +1,0 @@
-FROM mcr.microsoft.com/devcontainers/dotnet:7.0

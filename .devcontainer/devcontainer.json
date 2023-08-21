@@ -2,13 +2,10 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
     "name": "C# (.NET)",
-    //"image": "mcr.microsoft.com/devcontainers/dotnet:7.0",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
+    "image": "mcr.microsoft.com/devcontainers/dotnet:0.204.9-7.0",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
-		"ghcr.io/devcontainers/features/rust:1": {}
+        "ghcr.io/devcontainers/features/rust:1": {}
     },
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [5000, 5001],
@@ -21,11 +18,7 @@
                 "EditorConfig.EditorConfig",
                 "ms-dotnettools.csharp",
                 "formulahendry.dotnet-test-explorer",
-                "ryanluker.vscode-coverage-gutters",
-                "DotJoshJohnson.xml",
-                "zxh404.vscode-proto3",
-                "bierner.markdown-footnotes",
-                "bierner.markdown-mermaid"
+                "DotJoshJohnson.xml"
             ],
             "settings": {
                 "editor.formatOnSave": true

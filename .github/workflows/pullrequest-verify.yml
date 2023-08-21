@@ -28,3 +28,9 @@ jobs:
 
       - name: Verify formatting
         run: make lint
+
+  build-nuget-package:
+    uses: ./.github/workflows/reusable-build-nuget-package.yaml
+    with:
+      version: 0.0.1
+      configuration: Release

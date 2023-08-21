@@ -3,7 +3,7 @@ use core::slice;
 use curve25519_dalek_ng::scalar::Scalar;
 use sha3::Sha3_512;
 
-use crate::deref;
+use crate::reref;
 
 #[no_mangle]
 pub unsafe extern "C" fn scalar_new(bytes: *const u8) -> *const Scalar {
@@ -36,21 +36,21 @@ pub unsafe extern "C" fn scalar_to_bytes(this: *mut Scalar, dst: *mut u8) {
 
 #[no_mangle]
 pub unsafe extern "C" fn scalar_spill_guts(this: *mut Scalar) {
-    let this = deref!(this);
+    let this = reref(this);
     println!("{this:?}");
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn scalar_equals(lhs: *const Scalar, rhs: *const Scalar) -> bool {
-    let lhs = deref!(lhs);
-    let rhs = deref!(rhs);
+    let lhs = &*lhs;
+    let rhs = &*rhs;
     lhs == rhs
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn scalar_add(lhs: *const Scalar, rhs: *const Scalar) -> *const Scalar {
-    let lhs = deref!(lhs);
-    let rhs = deref!(rhs);
+    let lhs = &*lhs;
+    let rhs = &*rhs;
     Box::into_raw(Box::new(lhs + rhs))
 }
 

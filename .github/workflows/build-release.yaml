@@ -1,0 +1,34 @@
+name: Build release artifacts
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  define-version:
+    uses: ./.github/workflows/reusable-tag-version.yaml
+
+  build-nuget-package:
+    needs:
+      - define-version
+    uses: ./.github/workflows/reusable-build-nuget-package.yaml
+    with:
+      version: ${{ needs.define-version.outputs.version }}
+      configuration: Release
+
+  publish-pedersen-nuget:
+    name: Publish PedersenCommitment Nuget package
+    needs:
+      - build-nuget-package
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: pedersen-nuget
+          path: build
+
+      - name: Publish
+        shell: bash
+        run: dotnet nuget push build/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
