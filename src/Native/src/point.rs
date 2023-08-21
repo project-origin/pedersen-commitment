@@ -4,7 +4,7 @@ use curve25519_dalek_ng::{
 };
 use std::{ptr, slice};
 
-use crate::deref;
+use crate::reref;
 
 #[no_mangle]
 pub unsafe extern "C" fn ristretto_point_from_uniform_bytes(
@@ -15,14 +15,14 @@ pub unsafe extern "C" fn ristretto_point_from_uniform_bytes(
 }
 
 #[no_mangle]
-pub extern "C" fn ristretto_point_gut_spill(this: *const RistrettoPoint) {
-    let this = deref!(this);
+pub unsafe extern "C" fn ristretto_point_gut_spill(this: *const RistrettoPoint) {
+    let this = reref(this);
     println!("My Guts: {:?}", this.compress());
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn ristretto_point_compress(this: *const RistrettoPoint, dst: *mut u8) {
-    let this = deref!(this);
+    let this = reref(this);
     let dst = slice::from_raw_parts_mut(dst, 32);
     let src = this.compress().to_bytes();
     dst.clone_from_slice(&src);
@@ -39,38 +39,38 @@ pub extern "C" fn ristretto_point_decompress(bytes: *const u8) -> *const Ristret
 }
 
 #[no_mangle]
-pub extern "C" fn ristretto_point_equals(
+pub unsafe extern "C" fn ristretto_point_equals(
     lhs: *const RistrettoPoint,
     rhs: *const RistrettoPoint,
 ) -> bool {
-    let lhs = deref!(lhs);
-    let rhs = deref!(rhs);
+    let lhs = reref(lhs);
+    let rhs = reref(rhs);
     lhs == rhs
 }
 
 #[no_mangle]
-pub extern "C" fn ristretto_point_add(
+pub unsafe extern "C" fn ristretto_point_add(
     lhs: *const RistrettoPoint,
     rhs: *const RistrettoPoint,
 ) -> *const RistrettoPoint {
-    let lhs = deref!(lhs);
-    let rhs = deref!(rhs);
+    let lhs = reref(lhs);
+    let rhs = reref(rhs);
     Box::into_raw(Box::new(lhs + rhs))
 }
 
 #[no_mangle]
-pub extern "C" fn ristretto_point_sub(
+pub unsafe extern "C" fn ristretto_point_sub(
     lhs: *const RistrettoPoint,
     rhs: *const RistrettoPoint,
 ) -> *const RistrettoPoint {
-    let lhs = deref!(lhs);
-    let rhs = deref!(rhs);
+    let lhs = reref(lhs);
+    let rhs = reref(rhs);
     Box::into_raw(Box::new(lhs - rhs))
 }
 
 #[no_mangle]
-pub extern "C" fn ristretto_point_negate(this: *const RistrettoPoint) -> *const RistrettoPoint {
-    let this = deref!(this);
+pub unsafe extern "C" fn ristretto_point_negate(this: *const RistrettoPoint) -> *const RistrettoPoint {
+    let this = reref(this);
     Box::into_raw(Box::new(-this))
 }
 
@@ -79,7 +79,7 @@ pub unsafe extern "C" fn ristretto_point_mul_bytes(
     lhs: *const RistrettoPoint,
     rhs: *const u8,
 ) -> *const RistrettoPoint {
-    let lhs = deref!(lhs);
+    let lhs = reref(lhs);
 
     let rhs = slice::from_raw_parts(rhs, 32);
     let rhs = Scalar::from_bytes_mod_order(rhs.try_into().unwrap());
@@ -87,12 +87,12 @@ pub unsafe extern "C" fn ristretto_point_mul_bytes(
 }
 
 #[no_mangle]
-pub extern "C" fn ristretto_point_mul_scalar(
+pub unsafe extern "C" fn ristretto_point_mul_scalar(
     lhs: *const RistrettoPoint,
     rhs: *const Scalar,
 ) -> *const RistrettoPoint {
-    let lhs = deref!(lhs);
-    let rhs = deref!(rhs);
+    let lhs = reref(lhs);
+    let rhs = reref(rhs);
     Box::into_raw(Box::new(lhs * rhs))
 }
 
@@ -120,7 +120,7 @@ pub unsafe extern "C" fn compressed_ristretto_to_bytes(
     this: *mut CompressedRistretto,
     dst: *mut u8,
 ) {
-    let this = deref!(this);
+    let this = reref(this);
     let src = this.as_bytes();
     let dst = slice::from_raw_parts_mut(dst, 32);
     dst.clone_from_slice(src);

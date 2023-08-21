@@ -2,8 +2,10 @@ using System;
 using System.Runtime.InteropServices;
 namespace ProjectOrigin.PedersenCommitment.Ristretto;
 
-public static class Extensions
+public static partial class Extensions
 {
+
+    public const String LIBRARY = "rust_ffi";
     internal static byte[] ToByteArray(this ulong value, uint arrayLength)
     {
         var inputBytes = BitConverter.GetBytes(value);
@@ -19,11 +21,11 @@ public static class Extensions
         return outputArray;
     }
 
-    [DllImport("rust_ffi", EntryPoint = "fill_bytes")]
-    internal static extern void FillBytes(RawVec raw, byte[] dst);
+    [LibraryImport(LIBRARY, EntryPoint = "fill_bytes")]
+    internal static partial void FillBytes(RawVec raw, byte[] dst);
 
-    [DllImport("rust_ffi", EntryPoint = "free_vec")]
-    internal static extern void FreeVec(RawVec raw);
+    [LibraryImport(LIBRARY, EntryPoint = "free_vec")]
+    internal static partial void FreeVec(RawVec raw);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawVec

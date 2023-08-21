@@ -2,7 +2,8 @@ use bulletproofs::PedersenGens;
 use curve25519_dalek_ng::{ristretto::RistrettoPoint, scalar::Scalar};
 use std::slice;
 
-use crate::deref;
+use crate::util::reref;
+
 
 #[no_mangle]
 pub extern "C" fn pedersen_gens_default() -> *mut PedersenGens {
@@ -39,14 +40,14 @@ pub unsafe extern "C" fn pedersen_gens_commit_bytes(
 }
 
 #[no_mangle]
-pub extern "C" fn pedersen_gens_B(this: *const PedersenGens) -> *const RistrettoPoint {
-    let this = &deref!(this);
+pub unsafe extern "C" fn pedersen_gens_B(this: *const PedersenGens) -> *const RistrettoPoint {
+    let this = reref(this);
     Box::into_raw(Box::new(this.B))
 }
 
 #[no_mangle]
-pub extern "C" fn pedersen_gens_B_blinding(this: *const PedersenGens) -> *const RistrettoPoint {
-    let this = &deref!(this);
+pub unsafe extern "C" fn pedersen_gens_B_blinding(this: *const PedersenGens) -> *const RistrettoPoint {
+    let this = reref(this);
     Box::into_raw(Box::new(this.B_blinding))
 }
 
@@ -56,7 +57,7 @@ pub unsafe extern "C" fn pedersen_gens_commit(
     value: *const Scalar,
     blinding: *const Scalar,
 ) -> *mut RistrettoPoint {
-    let this = deref!(this);
+    let this = reref(this);
     Box::into_raw(Box::new(this.commit(*value, *blinding)))
 }
 
@@ -65,7 +66,9 @@ pub extern "C" fn pedersen_gens_free(this: *mut PedersenGens) {
     if this.is_null() {
         return;
     }
+
     unsafe {
         drop(Box::from_raw(this));
     }
 }
+

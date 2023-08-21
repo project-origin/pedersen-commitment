@@ -6,10 +6,15 @@ pub struct RawVec<T> {
     pub cap: usize,
 }
 
-#[macro_export]
-macro_rules! deref {
-    ($ptr:ident) => {{
-        assert!(!$ptr.is_null(), "null pointer");
-        unsafe { &*$ptr }
-    }};
+// This macro aids visually seeing where pointers gets dereferenced into a reference,
+// and allows us to possibly 'inject' checks
+#[inline(always)]
+pub(crate) unsafe fn reref<T>(ptr: *const T) -> &'static T {
+    &*ptr
+}
+
+#[allow(unused)]
+#[inline(always)]
+pub(crate) unsafe fn reref_mut<T>(ptr: *mut T) -> &'static mut T {
+    &mut *ptr
 }
