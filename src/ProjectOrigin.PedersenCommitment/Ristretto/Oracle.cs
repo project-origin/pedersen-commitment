@@ -9,13 +9,13 @@ public partial class Oracle
     private partial class NativeTranscript
     {
 
-        [LibraryImport("rust_ffi", EntryPoint = "transcript_new")]
+        [LibraryImport(Library.Name, EntryPoint = "transcript_new")]
         internal static partial IntPtr New(byte[] label, int len);
 
-        [LibraryImport("rust_ffi", EntryPoint = "transcript_append_point")]
+        [LibraryImport(Library.Name, EntryPoint = "transcript_append_point")]
         internal static partial void AppendPoint(IntPtr self, byte[] label, int len, IntPtr point);
 
-        [LibraryImport("rust_ffi", EntryPoint = "transcript_challenge_scalar")]
+        [LibraryImport(Library.Name, EntryPoint = "transcript_challenge_scalar")]
         internal static partial IntPtr ChallengeScalar(IntPtr self, byte[] label, int len);
     }
 

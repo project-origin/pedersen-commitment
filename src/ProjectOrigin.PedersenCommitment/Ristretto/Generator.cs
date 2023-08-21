@@ -10,25 +10,25 @@ public sealed partial record Generator
 {
     private partial class Native
     {
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_default")]
+        [LibraryImport(Library.Name, EntryPoint = "pedersen_gens_default")]
         internal static partial IntPtr Default();
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_new")]
+        [LibraryImport(Library.Name, EntryPoint = "pedersen_gens_new")]
         internal static partial IntPtr New(IntPtr g, IntPtr h);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_commit")]
+        [LibraryImport(Library.Name, EntryPoint = "pedersen_gens_commit")]
         internal static partial IntPtr Commit(IntPtr self, IntPtr m, IntPtr r);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_commit_bytes")]
+        [LibraryImport(Library.Name, EntryPoint = "pedersen_gens_commit_bytes")]
         internal static partial IntPtr Commit(IntPtr self, byte[] m, byte[] r);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_free")]
+        [LibraryImport(Library.Name, EntryPoint = "pedersen_gens_free")]
         internal static partial void Free(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_B")]
+        [LibraryImport(Library.Name, EntryPoint = "pedersen_gens_B")]
         internal static partial IntPtr G(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_B_blinding")]
+        [LibraryImport(Library.Name, EntryPoint = "pedersen_gens_B_blinding")]
         internal static partial IntPtr H(IntPtr self);
     }
 

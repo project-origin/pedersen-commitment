@@ -19,10 +19,10 @@ public static partial class Extensions
         return outputArray;
     }
 
-    [LibraryImport("rust_ffi", EntryPoint = "fill_bytes")]
+    [LibraryImport(Library.Name, EntryPoint = "fill_bytes")]
     internal static partial void FillBytes(RawVec raw, byte[] dst);
 
-    [LibraryImport("rust_ffi", EntryPoint = "free_vec")]
+    [LibraryImport(Library.Name, EntryPoint = "free_vec")]
     internal static partial void FreeVec(RawVec raw);
 
     [StructLayout(LayoutKind.Sequential)]
