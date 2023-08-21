@@ -1,58 +1,53 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RuntimeIdentifiers>linux-x64;linux-arm64;win-x64</RuntimeIdentifiers>
-    <TargetFramework>net7.0</TargetFramework>
+    <RuntimeIdentifiers>linux-x64;linux-arm64;osx-x64;osx-arm64;win-x64;win-arm64</RuntimeIdentifiers>
 
-    <NativeOutputPath>../Native/target/$(Configuration.ToLowerInvariant())/</NativeOutputPath>
     <MacOSIntelOutput>../Native/target/x86_64-apple-darwin/$(Configuration.ToLowerInvariant())/librust_ffi.dylib</MacOSIntelOutput>
     <MacOSARMOutput>../Native/target/aarch64-apple-darwin/$(Configuration.ToLowerInvariant())/librust_ffi.dylib</MacOSARMOutput>
     <LinuxIntelOutput>../Native/target/x86_64-unknown-linux-gnu/$(Configuration.ToLowerInvariant())/librust_ffi.so</LinuxIntelOutput>
     <LinuxARMOutput>../Native/target/aarch64-unknown-linux-gnu/$(Configuration.ToLowerInvariant())/librust_ffi.so</LinuxARMOutput>
-    <WindowsIntelOutput>../Native/target/x86_64-pc-windows-gnu/$(Configuration.ToLowerInvariant())/rust_ffi.dll</WindowsIntelOutput>
-    <WindowsARMOutput>../Native/target/aarch64-pc-windows-gnu/$(Configuration.ToLowerInvariant())/rust_ffi.dll</WindowsARMOutput>
+    <WindowsIntelOutput>../Native/target/x86_64-pc-windows-msvc/$(Configuration.ToLowerInvariant())/rust_ffi.dll</WindowsIntelOutput>
+    <WindowsARMOutput>../Native/target/aarch64-pc-windows-msvc/$(Configuration.ToLowerInvariant())/rust_ffi.dll</WindowsARMOutput>
   </PropertyGroup>
-
 
   <ItemGroup>
     <!-- These libraries are only included if found, so it is required to compile them first -->
+    <Content Include="$(MacOSIntelOutput)" Condition="Exists($(MacOSIntelOutput))">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
 
-    <Content Condition="Exists($(MacOSIntelOutput))"
-      Include="$(MacOSIntelOutput)"
-      Pack="true"
-      PackagePath="runtimes/osx-x64/native/"
-      CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(MacOSARMOutput)" Condition="Exists($(MacOSARMOutput))">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/osx-arm64/native/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
 
-    <Content Condition="Exists($(MacOSARMOutput))"
-      Include="$(MacOSARMOutput)"
-      Pack="true"
-      PackagePath="runtimes/osx-arm64/native/"
-      CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(LinuxIntelOutput)" Condition="Exists($(LinuxIntelOutput))">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/linux-x64/native/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
 
-    <Content Condition="Exists($(LinuxIntelOutput))"
-      Include="$(LinuxIntelOutput)"
-      Pack="true"
-      PackagePath="runtimes/linux-x64/native/"
-      CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(LinuxARMOutput)" Condition="Exists($(LinuxARMOutput))">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/linux-arm64/native/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
 
-    <Content Condition="Exists($(LinuxARMOutput))"
-      Include="$(LinuxARMOutput)"
-      Pack="true"
-      PackagePath="runtimes/linux-arm64/native/"
-      CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(WindowsIntelOutput)" Condition="Exists($(WindowsIntelOutput))">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
 
-    <Content Condition="Exists($(WindowsIntelOutput))"
-      Include="$(WindowsIntelOutput)"
-      Pack="true"
-      PackagePath="runtimes/win-x86/native/"
-      CopyToOutputDirectory="PreserveNewest" />
-
-    <Content Condition="Exists($(WindowsARMOutput))"
-      Include="$(WindowsARMOutput)"
-      Pack="true"
-      PackagePath="runtimes/win-arm64/native/"
-      CopyToOutputDirectory="PreserveNewest" />
-
+    <Content Include="$(WindowsARMOutput)" Condition="Exists($(WindowsARMOutput))">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win-arm64/native/</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

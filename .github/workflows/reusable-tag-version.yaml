@@ -1,0 +1,19 @@
+name: Get git tag version
+
+on:
+  workflow_call:
+    outputs:
+      version:
+        description: 'The version of the package'
+        value: ${{ steps.output-version.outputs.version }}
+
+jobs:
+  define-version:
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.output-version.outputs.version }}
+
+    steps:
+      - name: Set env
+        id: output-version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT

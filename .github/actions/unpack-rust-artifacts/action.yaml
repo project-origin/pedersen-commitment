@@ -1,0 +1,30 @@
+name: 'Unpack Rust artifacts'
+description: 'Download Rust artifacts from a previous workflow run and unpack them into a directory structure that can be used by the native build'
+
+inputs:
+  path:
+    description: 'The path to unpack the artifacts to'
+    required: true
+  configuration:
+    description: 'The configuration to unpack the artifacts for'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/download-artifact@v3
+      with:
+        path: ${{ inputs.path }}
+
+    - name: Add subfolders
+      shell: bash
+      run: |
+        for d in ${{ inputs.path }}/*/ ; do
+          mkdir -p "$d/${{ inputs.configuration }}"
+          find "$d" -maxdepth 1 -type f -exec mv "{}" "$d/${{ inputs.configuration }}" \;
+        done
+
+    - name: list recursive files in rust-artifacts
+      shell: bash
+      run: |
+        find ${{ inputs.path }} -type f
