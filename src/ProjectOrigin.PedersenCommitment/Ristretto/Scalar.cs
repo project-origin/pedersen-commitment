@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace ProjectOrigin.PedersenCommitment.Ristretto;
+using static Extensions;
 
 /// <summary>
 /// Scalar referencing a Rust object, guaranteed to always be in the field.
@@ -10,41 +11,41 @@ public sealed partial class Scalar
 {
     private partial class Native
     {
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_new")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_new")]
         internal static partial IntPtr New(byte[] bytes);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_random")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_random")]
         internal static partial IntPtr Random();
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_spill_guts")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_spill_guts")]
         internal static partial void SpillGuts(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_to_bytes")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_to_bytes")]
         internal static partial void ToBytes(IntPtr self, byte[] output);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_free")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_free")]
         internal static partial void Free(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_add")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_add")]
         internal static partial IntPtr Add(IntPtr lhs, IntPtr rhs);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_sub")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_sub")]
         internal static partial IntPtr Sub(IntPtr lhs, IntPtr rhs);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_negate")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_negate")]
         internal static partial IntPtr Negate(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_mul")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_mul")]
         internal static partial IntPtr Mul(IntPtr lhs, IntPtr rhs);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_sum")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_sum")]
         internal static partial IntPtr Sum(IntPtr[] args, int len);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_equals")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_equals")]
         [return: MarshalAs(UnmanagedType.U1)]
         internal static partial bool Equals(IntPtr lhs, IntPtr rhs);
 
-        [LibraryImport("rust_ffi", EntryPoint = "scalar_hash_from_bytes")]
+        [LibraryImport(LIBRARY, EntryPoint = "scalar_hash_from_bytes")]
         internal static partial IntPtr HashFromBytes(byte[] bytes, int len);
     }
 

@@ -2,32 +2,33 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace ProjectOrigin.PedersenCommitment.Ristretto;
+using static Extensions;
 
 public partial record RangeProof
 {
     private partial class Native
     {
-        [LibraryImport("rust_ffi", EntryPoint = "rangeproof_prove_single")]
+        [LibraryImport(LIBRARY, EntryPoint = "rangeproof_prove_single")]
         internal static partial RangeProofWithCommit ProveSingle(IntPtr bp_gen, IntPtr pc_gen, ulong v, IntPtr blinding, uint n, byte[] label, int label_len);
 
-        [LibraryImport("rust_ffi", EntryPoint = "rangeproof_prove_multiple")]
+        [LibraryImport(LIBRARY, EntryPoint = "rangeproof_prove_multiple")]
         internal static partial RangeProofWithCommit ProveMultiple(IntPtr bp_gen, IntPtr pc_gen, ulong[] v, IntPtr blinding, uint n, byte[] label, int label_len, int amount);
 
-        [LibraryImport("rust_ffi", EntryPoint = "rangeproof_verify_single")]
+        [LibraryImport(LIBRARY, EntryPoint = "rangeproof_verify_single")]
         [return: MarshalAs(UnmanagedType.U1)]
         internal static partial bool VerifySingle(IntPtr self, IntPtr bp_gen, IntPtr pc_gen, IntPtr commit, uint n, byte[] label, int label_len);
 
-        [LibraryImport("rust_ffi", EntryPoint = "rangeproof_verify_multiple")]
+        [LibraryImport(LIBRARY, EntryPoint = "rangeproof_verify_multiple")]
         [return: MarshalAs(UnmanagedType.U1)]
         internal static partial bool VerifyMultiple(IntPtr self, IntPtr bp_gen, IntPtr pc_gen, IntPtr commits, uint n, byte[] label, int label_len);
 
-        [LibraryImport("rust_ffi", EntryPoint = "rangeproof_free")]
+        [LibraryImport(LIBRARY, EntryPoint = "rangeproof_free")]
         internal static partial void Free(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "rangeproof_to_bytes")]
+        [LibraryImport(LIBRARY, EntryPoint = "rangeproof_to_bytes")]
         internal static partial Extensions.RawVec ToBytes(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "rangeproof_from_bytes")]
+        [LibraryImport(LIBRARY, EntryPoint = "rangeproof_from_bytes")]
         internal static partial IntPtr FromBytes(byte[] bytes, uint len);
     }
 
@@ -177,10 +178,10 @@ public partial record BulletProofGen
 
     internal readonly IntPtr _ptr;
 
-    [LibraryImport("rust_ffi", EntryPoint = "bpgen_new")]
+    [LibraryImport(LIBRARY, EntryPoint = "bpgen_new")]
     private static partial IntPtr New(uint gensCapacity, uint partyCapacity);
 
-    [LibraryImport("rust_ffi", EntryPoint = "bpgen_free")]
+    [LibraryImport(LIBRARY, EntryPoint = "bpgen_free")]
     private static partial void Free(IntPtr self);
 
     /// <summary>

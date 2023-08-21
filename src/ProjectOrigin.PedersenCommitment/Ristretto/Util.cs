@@ -4,6 +4,8 @@ namespace ProjectOrigin.PedersenCommitment.Ristretto;
 
 public static partial class Extensions
 {
+
+    public const String LIBRARY = "rust_ffi";
     internal static byte[] ToByteArray(this ulong value, uint arrayLength)
     {
         var inputBytes = BitConverter.GetBytes(value);
@@ -19,7 +21,7 @@ public static partial class Extensions
         return outputArray;
     }
 
-    [LibraryImport("rust_ffi", EntryPoint = "fill_bytes")]
+    [LibraryImport(LIBRARY, EntryPoint = "fill_bytes")]
     internal static partial void FillBytes(RawVec raw, byte[] dst);
 
     [LibraryImport("rust_ffi", EntryPoint = "free_vec")]

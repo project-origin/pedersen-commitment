@@ -5,30 +5,31 @@ using System.Text;
 using ProjectOrigin.PedersenCommitment.Ristretto;
 
 namespace ProjectOrigin.PedersenCommitment;
+using static Extensions;
 
 public sealed partial record Generator
 {
     private partial class Native
     {
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_default")]
+        [LibraryImport(LIBRARY, EntryPoint = "pedersen_gens_default")]
         internal static partial IntPtr Default();
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_new")]
+        [LibraryImport(LIBRARY, EntryPoint = "pedersen_gens_new")]
         internal static partial IntPtr New(IntPtr g, IntPtr h);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_commit")]
+        [LibraryImport(LIBRARY, EntryPoint = "pedersen_gens_commit")]
         internal static partial IntPtr Commit(IntPtr self, IntPtr m, IntPtr r);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_commit_bytes")]
+        [LibraryImport(LIBRARY, EntryPoint = "pedersen_gens_commit_bytes")]
         internal static partial IntPtr Commit(IntPtr self, byte[] m, byte[] r);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_free")]
+        [LibraryImport(LIBRARY, EntryPoint = "pedersen_gens_free")]
         internal static partial void Free(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_B")]
+        [LibraryImport(LIBRARY, EntryPoint = "pedersen_gens_B")]
         internal static partial IntPtr G(IntPtr self);
 
-        [LibraryImport("rust_ffi", EntryPoint = "pedersen_gens_B_blinding")]
+        [LibraryImport(LIBRARY, EntryPoint = "pedersen_gens_B_blinding")]
         internal static partial IntPtr H(IntPtr self);
     }
 
