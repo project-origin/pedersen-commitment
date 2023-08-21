@@ -12,11 +12,9 @@ public sealed partial class Point
         [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_from_uniform_bytes")]
         internal static partial IntPtr FromUniformBytes(byte[] bytes);
 
-        // TODO: check if byte[] is a sane argument
         [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_compress")]
         internal static partial void Compress(IntPtr self, byte[] bytes_ptr);
 
-        // TODO: check if byte[] is a sane argument
         [LibraryImport("rust_ffi", EntryPoint = "ristretto_point_decompress")]
         internal static partial IntPtr Decompress(byte[] bytes);
 
