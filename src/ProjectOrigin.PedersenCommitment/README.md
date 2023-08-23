@@ -1,6 +1,8 @@
 # Project-Origin Pedersen Commitment
 
-This client library has an interface and currently a single implementation of HD keys as descriped in BIP32, and implemented using NBitcoin with the Secp256k1 curve.
+This library enables one to create and open Pedersen commitments.
+
+**Release notes** can be found on [GitHub](https://github.com/project-origin/pedersen-commitment/releases).
 
 ## How to
 
