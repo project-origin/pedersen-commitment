@@ -5,7 +5,7 @@ on:
     outputs:
       version:
         description: 'The version of the package'
-        value: ${{ steps.output-version.outputs.version }}
+        value: ${{ jobs.define-version.outputs.version }}
 
 jobs:
   define-version:
