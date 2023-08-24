@@ -1,8 +1,12 @@
 # Project-Origin Pedersen Commitment
 
-This library enables one to create and open Pedersen commitments.
+The library allows construction of Pedersen commitments and rangeproofs along with verification.
 
-**Release notes** can be found on [GitHub](https://github.com/project-origin/pedersen-commitment/releases).
+This library wraps the rust [bulletproofs](https://github.com/dalek-cryptography/bulletproofs) and [curve25519-dalek](dalek-cryptography/curve25519-dalek) libraries using the ristretto group.
+
+## Release notes
+
+All release notes can be found on [GitHub](https://github.com/project-origin/pedersen-commitment/releases).
 
 ## How to
 
@@ -30,7 +34,7 @@ ReadOnlySpan<byte> commitment = secret.Commitment.C;
 
 ### Range proofs
 
-If one wants to prove the commitment is within the allowed value, one can easily create a range proof using a label:
+If one wants to prove the commitment is within the allowed value, one can easily create a range proof using a label.
 
 > Note: In ProjectOrigin Electricity the label is always the string representation of certificate uuid.
 
@@ -39,7 +43,7 @@ string someLabel = "foobar";
 ReadOnlySpan<byte> rangeProof = secret.CreateRangeProof(someLabel);
 ```
 
-The range proof is hardcoded to allow values between 0 and uint.Max (32 bits).
+The range proof in this library is currently hardcoded to allow values between 0 and uint.Max (32 bits).
 
 #### Why use a label?
 
