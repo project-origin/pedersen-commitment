@@ -20,7 +20,7 @@ jobs:
     name: Build PedersenCommitment Nuget package
     needs:
       - build-rust-artifacts
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     env:
       project: src/ProjectOrigin.PedersenCommitment
