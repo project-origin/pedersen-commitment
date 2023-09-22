@@ -37,6 +37,11 @@ jobs:
         run: |
           make restore
 
+      - name: Build rust code
+        shell: bash
+        run: |
+          make build-rust
+
       - name: Install dotnet-sonarscanner
         shell: bash
         run: |
