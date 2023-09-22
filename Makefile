@@ -44,9 +44,12 @@ clean:
 restore:
 	dotnet restore $(src_path)
 
-## Builds all the code
-build:
+## Builds the Rust code
+build-rust:
 	(cd src/Native; cargo build --target=$(target_triple))
+
+## Builds all the code
+build: build-rust
 	dotnet build $(src_path)
 
 build-release:
