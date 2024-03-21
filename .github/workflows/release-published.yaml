@@ -1,0 +1,38 @@
+name: Build release artifacts
+
+on:
+  release:
+    types: [published]
+
+env:
+  configuration: Release
+  path: src/ProjectOrigin.PedersenCommitment
+
+jobs:
+  define-version:
+    uses: project-origin/.github/.github/workflows/reusable-tag-version.yaml@main
+
+  build-nuget-package:
+    needs:
+      - define-version
+    uses: ./.github/workflows/reusable-build-nuget-package.yaml
+    with:
+      version: ${{ needs.define-version.outputs.version }}
+      configuration: Release
+
+  publish-nuget-package:
+    name: Publish nuget package
+    runs-on: ubuntu-22.04
+    needs:
+      - build-nuget-package
+    env:
+      nuget_path: nuget-packages
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: ${{ env.nuget_path }}
+
+      - name: Publish
+        shell: bash
+        run: dotnet nuget push ${{ env.nuget_path }}/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

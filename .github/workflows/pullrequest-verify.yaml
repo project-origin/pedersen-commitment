@@ -1,0 +1,22 @@
+name: Verifies PR are ready for merge
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify-devcontainer:
+    uses: project-origin/.github/.github/workflows/reusable-verify-devcontainer.yaml@main
+
+  verify-code:
+    uses: project-origin/.github/.github/workflows/reusable-verify-code.yaml@main
+
+  verify-renovate:
+    uses: project-origin/.github/.github/workflows/reusable-verify-renovate.yaml@main
+
+  verify-build-nuget:
+    uses: ./.github/workflows/reusable-build-nuget-package.yaml
+    with:
+      version: 0.0.1
+      configuration: Release
