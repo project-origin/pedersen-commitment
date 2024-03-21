@@ -1,0 +1,3 @@
+{
+    "extends": ["github>project-origin/.github:renovate-defaults.json"]
+}

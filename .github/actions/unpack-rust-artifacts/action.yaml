@@ -16,12 +16,19 @@ runs:
       with:
         path: ${{ inputs.path }}
 
+    - name: Lowercase configuration
+      id: lowercase_configuration
+      shell: bash
+      run: echo "value=$(echo ${{ inputs.configuration }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
     - name: Add subfolders
       shell: bash
+      env:
+        CONFIGURATION: ${{ steps.lowercase_configuration.outputs.value }}
       run: |
         for d in ${{ inputs.path }}/*/ ; do
-          mkdir -p "$d/${{ inputs.configuration }}"
-          find "$d" -maxdepth 1 -type f -exec mv "{}" "$d/${{ inputs.configuration }}" \;
+          mkdir -p "$d/${{ env.CONFIGURATION }}"
+          find "$d" -maxdepth 1 -type f -exec mv "{}" "$d/${{ env.CONFIGURATION }}" \;
         done
 
     - name: list recursive files in rust-artifacts
