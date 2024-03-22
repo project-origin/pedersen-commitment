@@ -5,38 +5,29 @@ use merlin::Transcript;
 
 use crate::reref;
 
-
 #[no_mangle]
 pub unsafe extern "C" fn transcript_new(label: *const u8, len: usize) -> *const Transcript {
     let label = slice::from_raw_parts(label, len);
     Box::into_raw(Box::new(Transcript::new(label)))
 }
 
-
 #[no_mangle]
 pub unsafe extern "C" fn transcript_append_point(
     this: *mut Transcript,
     label: *const u8,
     len: usize,
-    point: *const RistrettoPoint
+    point: *const RistrettoPoint,
 ) {
     let label = slice::from_raw_parts(label, len);
     let point = reref(point);
     (*this).append_message(label, point.compress().as_bytes());
 }
 
-
 #[no_mangle]
-pub unsafe extern "C" fn transcript_domain(
-    this: *mut Transcript,
-    message: *const u8,
-    len: usize,
-) {
+pub unsafe extern "C" fn transcript_domain(this: *mut Transcript, message: *const u8, len: usize) {
     let message = slice::from_raw_parts(message, len);
     (*this).append_message(b"domain-sep", message)
 }
-
-
 
 #[no_mangle]
 pub unsafe extern "C" fn transcript_challenge_scalar(

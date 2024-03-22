@@ -4,7 +4,6 @@ use std::slice;
 
 use crate::util::reref;
 
-
 #[no_mangle]
 pub extern "C" fn pedersen_gens_default() -> *mut PedersenGens {
     Box::into_raw(Box::default())
@@ -46,7 +45,9 @@ pub unsafe extern "C" fn pedersen_gens_B(this: *const PedersenGens) -> *const Ri
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn pedersen_gens_B_blinding(this: *const PedersenGens) -> *const RistrettoPoint {
+pub unsafe extern "C" fn pedersen_gens_B_blinding(
+    this: *const PedersenGens,
+) -> *const RistrettoPoint {
     let this = reref(this);
     Box::into_raw(Box::new(this.B_blinding))
 }
@@ -71,4 +72,3 @@ pub extern "C" fn pedersen_gens_free(this: *mut PedersenGens) {
         drop(Box::from_raw(this));
     }
 }
-

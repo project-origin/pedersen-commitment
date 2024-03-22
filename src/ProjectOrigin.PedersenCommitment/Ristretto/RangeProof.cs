@@ -98,7 +98,8 @@ public partial record RangeProof
         )
     {
         var commit_ptr = CompressedPoint.FromBytes(commitment._bytes);
-        if (commit_ptr == IntPtr.Zero) {
+        if (commit_ptr == IntPtr.Zero)
+        {
             return false;
         }
         var res = Native.VerifySingle(

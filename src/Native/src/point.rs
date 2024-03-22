@@ -71,7 +71,9 @@ pub unsafe extern "C" fn ristretto_point_sub(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn ristretto_point_negate(this: *const RistrettoPoint) -> *const RistrettoPoint {
+pub unsafe extern "C" fn ristretto_point_negate(
+    this: *const RistrettoPoint,
+) -> *const RistrettoPoint {
     let this = reref(this);
     Box::into_raw(Box::new(-this))
 }
@@ -133,7 +135,7 @@ pub unsafe extern "C" fn compressed_ristretto_from_bytes(
     bytes: *mut u8,
 ) -> *mut CompressedRistretto {
     let bytes = slice::from_raw_parts(bytes, 32);
-    let Ok(point)  = CompressedRistretto::from_slice(bytes) else {
+    let Ok(point) = CompressedRistretto::from_slice(bytes) else {
         return ptr::null_mut();
     };
     Box::into_raw(Box::new(point))
