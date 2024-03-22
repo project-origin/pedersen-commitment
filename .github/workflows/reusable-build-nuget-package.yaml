@@ -26,10 +26,10 @@ jobs:
     env:
       project: src/ProjectOrigin.PedersenCommitment
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Setup .NET Core SDK from global.json
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@3447fd6a9f9e57506b15f895c5b76d3b197dc7c2 # v3
 
       - name: Unpack rust artifacts
         uses: ./.github/actions/unpack-rust-artifacts
@@ -42,7 +42,7 @@ jobs:
         run: dotnet pack --output build --configuration ${{ inputs.configuration }} -p:Version=${{ inputs.version }} ${{ env.project }}
 
       - name: Upload nuget artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
         with:
           retention-days: 1
           path: build/*.nupkg
