@@ -21,7 +21,7 @@ help:
 	@printf "\n"
 
 ## Verify code is ready for commit to branch, runs tests and verifies formatting.
-verify: build test lint
+verify: test lint
 	@echo "Code is ready to commit."
 
 ## Prints dotnet info
@@ -49,8 +49,8 @@ build-rust:
 	(cd src/Native; cargo build --target=$(target_triple))
 
 ## Builds all the code
-build: build-rust
-	dotnet build $(src_path)
+build: build-rust restore
+	dotnet build --no-restore $(src_path)
 
 build-release:
 	(cd src/Native; cargo build --target=$(target_triple) --release)
@@ -61,5 +61,5 @@ format:
 	dotnet format $(src_path)
 
 ## Run all tests except Concordium integration
-test:
-	dotnet test $(src_path)
+test: build
+	dotnet test --no-build $(src_path)

@@ -15,45 +15,34 @@ on:
 jobs:
   build-rust-artifacts:
     uses: ./.github/workflows/reusable-build-rust-artifacts.yaml
+    with:
+      path: src/Native
 
-  build-pedersen-nuget:
-    name: Build PedersenCommitment Nuget package
+  publish-nuget-package:
+    name: Build and publish nuget package
+    runs-on: ubuntu-22.04
     needs:
       - build-rust-artifacts
-    runs-on: ubuntu-22.04
-
     env:
       project: src/ProjectOrigin.PedersenCommitment
-
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup .NET Core SDK 7
+      - name: Setup .NET Core SDK from global.json
         uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "7.0.203"
-
-      - name: Lowercase configuration
-        id: lowercase_configuration
-        run: echo "value=$(echo ${{ inputs.configuration }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
       - name: Unpack rust artifacts
         uses: ./.github/actions/unpack-rust-artifacts
         with:
           path: src/Native/target
-          configuration: ${{ steps.lowercase_configuration.outputs.value }}
-
-      - name: Build dotnet package
-        shell: bash
-        run: dotnet build --configuration ${{ inputs.configuration }} ${{ env.project }}
+          configuration: ${{ inputs.configuration }}
 
       - name: Package nuget package
         shell: bash
-        run: dotnet pack --output build --configuration ${{ inputs.configuration }} --no-restore -p:Version=${{ inputs.version }} ${{ env.project }}
+        run: dotnet pack --output build --configuration ${{ inputs.configuration }} -p:Version=${{ inputs.version }} ${{ env.project }}
 
       - name: Upload nuget artifact
         uses: actions/upload-artifact@v3
         with:
           retention-days: 1
-          name: pedersen-nuget
           path: build/*.nupkg

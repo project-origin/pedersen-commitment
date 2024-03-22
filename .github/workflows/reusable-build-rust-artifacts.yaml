@@ -2,6 +2,11 @@ name: Build Rust artifacts
 
 on:
   workflow_call:
+    inputs:
+      path:
+        description: 'Path to the Rust project'
+        required: true
+        type: string
 
 jobs:
   build-native-rust-artifacts:
@@ -46,9 +51,9 @@ jobs:
           linker = "aarch64-linux-gnu-gcc"
           EOF
 
-      - name: Build native packages
+      - name: Build rust package
         shell: bash
-        working-directory: 'src/Native'
+        working-directory: ${{ inputs.path }}
         run: |
           cargo build --release --target ${{ matrix.target }}
 
@@ -58,6 +63,6 @@ jobs:
           name: ${{ matrix.target }}
           retention-days: 1
           path: |
-            src/Native/target/${{ matrix.target }}/release/lib*.so
-            src/Native/target/${{ matrix.target }}/release/lib*.dylib
-            src/Native/target/${{ matrix.target }}/release/*.dll
+            ${{ inputs.path }}/target/${{ matrix.target }}/release/lib*.so
+            ${{ inputs.path }}/target/${{ matrix.target }}/release/lib*.dylib
+            ${{ inputs.path }}/target/${{ matrix.target }}/release/*.dll

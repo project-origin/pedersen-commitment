@@ -2,10 +2,13 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
     "name": "C# (.NET)",
-    "image": "mcr.microsoft.com/devcontainers/dotnet:0.204.9-7.0",
+    "image": "mcr.microsoft.com/devcontainers/dotnet:1.1.5-8.0-jammy",
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
-        "ghcr.io/devcontainers/features/rust:1": {}
+        "ghcr.io/devcontainers/features/rust:1": {
+            "version": "1.70",
+            "profile": "minimal"
+        }
     },
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [5000, 5001],

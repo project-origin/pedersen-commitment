@@ -1,4 +1,3 @@
-# this file describes the release categories and changelog generation.
 changelog:
   exclude:
     labels:
@@ -16,6 +15,9 @@ changelog:
     - title: Documentation
       labels:
         - documentation
+    - title: Dependency Updates
+      labels:
+        - dependencies
     - title: Other Changes
       labels:
         - "*"
