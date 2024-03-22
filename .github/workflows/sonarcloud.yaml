@@ -25,10 +25,10 @@ jobs:
       - name: Setup .NET Core SDK from global.json
         uses: actions/setup-dotnet@v4
 
-      - name: Restore
+      - name: Build code
         shell: bash
         run: |
-          make restore
+          make build
 
       - name: Install dotnet-sonarscanner
         shell: bash
