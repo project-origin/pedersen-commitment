@@ -28,22 +28,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup .NET Core SDK from global.json
+        uses: actions/setup-dotnet@v3
+
       - name: Unpack rust artifacts
         uses: ./.github/actions/unpack-rust-artifacts
         with:
           path: src/Native/target
           configuration: ${{ inputs.configuration }}
 
-      - name: Setup .NET Core SDK from global.json
-        uses: actions/setup-dotnet@v3
-
-      - name: Get version from git-tag
-        id: output-version
-        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
       - name: Package nuget package
         shell: bash
-        run: dotnet pack --output build --configuration ${{ inputs.configuration }} --no-restore -p:Version=${{ inputs.version }} ${{ env.project }}
+        run: dotnet pack --output build --configuration ${{ inputs.configuration }} -p:Version=${{ inputs.version }} ${{ env.project }}
 
       - name: Upload nuget artifact
         uses: actions/upload-artifact@v3
