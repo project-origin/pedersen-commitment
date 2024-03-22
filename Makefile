@@ -60,6 +60,10 @@ build-release:
 format:
 	dotnet format $(src_path)
 
-## Run all tests except Concordium integration
+## Run all tests
 test: build
+	dotnet test --no-build $(src_path)
+
+## Tests run with the sonarcloud analyser
+sonarcloud-test:
 	dotnet test --no-build $(src_path)
