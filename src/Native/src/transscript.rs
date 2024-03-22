@@ -1,6 +1,6 @@
 use core::slice;
 
-use curve25519_dalek_ng::{ristretto::RistrettoPoint, scalar::Scalar};
+use curve25519_dalek::{ristretto::RistrettoPoint, scalar::Scalar};
 use merlin::Transcript;
 
 use crate::reref;

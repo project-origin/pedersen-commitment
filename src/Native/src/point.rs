@@ -1,4 +1,4 @@
-use curve25519_dalek_ng::{
+use curve25519_dalek::{
     ristretto::{CompressedRistretto, RistrettoPoint},
     scalar::Scalar,
 };

@@ -9,7 +9,7 @@ crate-type = ['cdylib']
 
 [dependencies]
 bulletproofs = { git = "https://github.com/zkcrypto/bulletproofs" }
-curve25519-dalek-ng = { version = "4.1.2", package = "curve25519-dalek", features = ["digest", "rand_core"] }
+curve25519-dalek = { version = "4.1.2", features = ["digest", "rand_core"] }
 merlin = "3.0.0"
 rand = "0.8.5"
 sha3 = "0.10"

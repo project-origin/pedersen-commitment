@@ -1,6 +1,6 @@
 use core::slice;
 
-use curve25519_dalek_ng::scalar::Scalar;
+use curve25519_dalek::scalar::Scalar;
 use sha3::Sha3_512;
 
 use crate::reref;
