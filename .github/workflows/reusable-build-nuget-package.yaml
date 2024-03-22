@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-22.04
     needs:
       - build-rust-artifacts
+    env:
+      project: src/ProjectOrigin.PedersenCommitment
     steps:
       - uses: actions/checkout@v3
 
@@ -30,7 +32,7 @@ jobs:
         uses: ./.github/actions/unpack-rust-artifacts
         with:
           path: src/Native/target
-          configuration: Release
+          configuration: ${{ inputs.configuration }}
 
       - name: Setup .NET Core SDK from global.json
         uses: actions/setup-dotnet@v3
@@ -41,7 +43,7 @@ jobs:
 
       - name: Package nuget package
         shell: bash
-        run: make release-pack version=${{ steps.output-version.outputs.version }}
+        run: dotnet pack --output build --configuration ${{ inputs.configuration }} --no-restore -p:Version=${{ inputs.version }} ${{ env.project }}
 
       - name: Upload nuget artifact
         uses: actions/upload-artifact@v3
