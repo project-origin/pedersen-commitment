@@ -6,13 +6,13 @@
 
 use core::slice;
 
-use util::{RawVec, reref};
+use util::{reref, RawVec};
 pub mod generator;
 pub mod point;
 pub mod rangeproof;
 pub mod scalar;
-mod util;
 pub mod transscript;
+mod util;
 
 #[no_mangle]
 pub unsafe extern "C" fn fill_bytes(raw: *const RawVec<u8>, dst: *mut u8) {
