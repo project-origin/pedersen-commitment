@@ -23,4 +23,6 @@ jobs:
   publish-nuget-package:
     needs:
       - build-nuget-package
-    uses: project-origin/.github/.github/workflows/reusable-publish-nuget-artifacts.yaml@35a40cccfbada6bdd49ca01a6e825779b95b46d5
+    uses: project-origin/.github/.github/workflows/reusable-publish-nuget-artifacts.yaml@89202af6ad6b5f3cadc6afa211cc29af1e6a3965
+    secrets:
+      nuget_api_key: ${{ secrets.NUGET_API_KEY }}
