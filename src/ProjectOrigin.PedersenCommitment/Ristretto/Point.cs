@@ -187,6 +187,10 @@ public readonly partial struct CompressedPoint
         _bytes = bytes;
     }
 
+    /// <summary>
+    /// Creates a pointer to a CompressedRistretto point.
+    /// This pointer can be a null pointer if the bytes a invalid.
+    /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "compressed_ristretto_from_bytes")]
     internal static partial IntPtr FromBytes(byte[] bytes);
 

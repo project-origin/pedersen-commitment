@@ -1,7 +1,7 @@
 use core::slice;
 
 use bulletproofs::{BulletproofGens, PedersenGens, RangeProof};
-use curve25519_dalek_ng::{ristretto::CompressedRistretto, scalar::Scalar};
+use curve25519_dalek::{ristretto::CompressedRistretto, scalar::Scalar};
 use merlin::Transcript;
 
 use crate::{reref, util::RawVec};
