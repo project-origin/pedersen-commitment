@@ -19,10 +19,13 @@ jobs:
     with:
       version: ${{ needs.define-version.outputs.version }}
       configuration: Release
+      nuget_artifact: nuget-packages
 
   publish-nuget-package:
     needs:
       - build-nuget-package
-    uses: project-origin/.github/.github/workflows/reusable-publish-nuget-artifacts.yaml@89202af6ad6b5f3cadc6afa211cc29af1e6a3965
+    uses: project-origin/.github/.github/workflows/reusable-publish-nuget-artifacts.yaml@639a49296c45ee5e9859b6cd7356a380025d9959
+    with:
+      nuget_artifact: nuget-packages
     secrets:
       nuget_api_key: ${{ secrets.NUGET_API_KEY }}

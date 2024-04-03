@@ -11,6 +11,10 @@ on:
         description: 'The build configuration'
         required: true
         type: string
+      nuget_artifact:
+        description: 'The name of the artifact to upload to'
+        required: true
+        type: string
 
 jobs:
   build-rust-artifacts:
@@ -44,5 +48,6 @@ jobs:
       - name: Upload nuget artifact
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
         with:
+          name: ${{ inputs.nuget_artifact }}
           retention-days: 1
           path: build/*.nupkg
