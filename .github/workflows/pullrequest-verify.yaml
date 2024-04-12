@@ -7,13 +7,13 @@ on:
 
 jobs:
   verify-devcontainer:
-    uses: project-origin/.github/.github/workflows/reusable-verify-devcontainer.yaml@c3636dc0f4074360ec7c43680243c39cc6894565
+    uses: project-origin/.github/.github/workflows/reusable-verify-devcontainer.yaml@5f308f6499ed423ed1252156296e18be614202de
 
   verify-code:
-    uses: project-origin/.github/.github/workflows/reusable-verify-code.yaml@c3636dc0f4074360ec7c43680243c39cc6894565
+    uses: project-origin/.github/.github/workflows/reusable-verify-code.yaml@5f308f6499ed423ed1252156296e18be614202de
 
   verify-renovate:
-    uses: project-origin/.github/.github/workflows/reusable-verify-renovate.yaml@c3636dc0f4074360ec7c43680243c39cc6894565
+    uses: project-origin/.github/.github/workflows/reusable-verify-renovate.yaml@5f308f6499ed423ed1252156296e18be614202de
 
   verify-build-nuget:
     uses: ./.github/workflows/reusable-build-nuget-package.yaml
