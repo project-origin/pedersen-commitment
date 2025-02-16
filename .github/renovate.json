@@ -1,3 +1,9 @@
 {
-    "extends": ["github>project-origin/.github:renovate-defaults.json"]
+    "extends": ["github>project-origin/.github:renovate-defaults.json"],
+    "packageRules": [
+        {
+            "matchPackageNames": ["FluentAssertions"],
+            "allowedVersions": "<=7.1.0"
+        }
+    ]
 }
