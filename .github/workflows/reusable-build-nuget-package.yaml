@@ -24,7 +24,7 @@ jobs:
 
   publish-nuget-package:
     name: Build and publish nuget package
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - build-rust-artifacts
     env:
